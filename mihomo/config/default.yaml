@@ -1,0 +1,139 @@
+# 机场订阅
+proxy-providers:
+  # Airport1:
+  #   url: "机场订阅"
+  #   path: ./proxy_providers/机场订阅.yaml
+  #   type: http
+  #   interval: 86400
+  #   health-check:
+  #     enable: true
+  #     url: https://www.gstatic.com/generate_204
+  #     interval: 300
+  #   proxy: DIRECT
+
+# 节点信息
+proxies:
+  - {name: 🎯 直连, type: direct}
+
+# https://wiki.metacubex.one/config/general/
+# https://github.com/MetaCubeX/mihomo/blob/Meta/docs/config.yaml
+# https://wiki.metacubex.one/example/conf/#__tabbed_3_1
+# 全局配置
+
+log-level: info # 日志等级 silent/error/warning/info/debug
+port: 7890  # HTTP(S) 代理服务器端口
+socks-port: 7891 # SOCKS5 代理端口
+mixed-port: 10801 # HTTP(S) 和 SOCKS 代理混合端口
+redir-port: 7892 # 透明代理端口，用于 Linux 和 MacOS
+tproxy-port: 7893 # Transparent proxy server port for Linux (TProxy TCP and TProxy UDP)
+allow-lan: true # 允许局域网连接
+bind-address: "*" # 绑定 IP 地址，仅作用于 allow-lan 为 true，'*'表示所有地址
+ipv6: true 
+
+unified-delay: true # 去除握手等额外延迟
+tcp-concurrent: true # 同时对所有ip进行连接，返回延迟最低的地址
+
+# find-process-mode has 3 values:always, strict, off
+# - always, 开启，强制匹配所有进程
+# - strict, 默认，由 mihomo 判断是否开启
+# - off, 不匹配进程，推荐在路由器上使用此模式
+find-process-mode: strict
+
+# 全局 TLS 指纹，优先低于 proxy 内的 client-fingerprint
+# 可选： "chrome","firefox","safari","ios","random","none" options.
+# Utls is currently support TLS transport in TCP/grpc/WS/HTTP for VLESS/Vmess and trojan.
+global-client-fingerprint: chrome
+
+#keep-alive-idle: 600
+#keep-alive-interval: 15
+#disable-keep-alive: false
+
+profile:
+  store-selected: true  # 存储 select 选择记录
+  store-fake-ip: true # 持久化 fake-ip
+
+# 控制面板
+#external-controller: 0.0.0.0:9090
+#secret: ""
+#external-ui: "/etc/mihomo/run/ui"
+#external-ui-name: zashboard
+#external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+
+# DNS模块
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: true
+  respect-rules: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter-mode: blacklist
+  fake-ip-filter:
+    - "rule-set:domain_private,domain_cn"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "time.*.com"
+  default-nameserver:
+    - 223.5.5.5
+  proxy-server-nameserver:
+    - https://223.5.5.5/dns-query
+  # namesever尽量用运营商提供的DNS
+  nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+ 
+# 出站策略
+# 注意锚点必须放在引用的上方，可以集中把锚点全部放yaml的顶部。
+pr: &pr {type: select, proxies: [🚀 默认代理, 🎯 直连]}
+proxy-groups:
+  - {name: 🚀 默认代理, type: select, proxies: [♻️ 自动选择], include-all: true, filter: "^((?!直连).)*$"}
+  - {name: ♻️ 自动选择, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^((?!直连).)*$"}
+  - {name: 🤖 国外 AI, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
+  - {name: 🍀 Google, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
+  - {name: 📲 Telegram, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
+  - {name: 🐟 漏网之鱼, <<: *pr}  
+  #- {name: 🐬 Microsoft, type: select, proxies: [🚀 默认代理], include-all: true}
+  #- {name: 🎵 TikTok, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
+  #- {name: 📺 Netflix, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
+
+# 规则匹配
+# 此规则部分没有做防泄露处理，因为弊严重大于利！
+rules:
+  - RULE-SET,domain_private,DIRECT
+  - RULE-SET,domain_cn,DIRECT
+  - RULE-SET,ip_cn,DIRECT
+  - RULE-SET,domain_apple,DIRECT
+  - RULE-SET,domain_ai_not_cn,🤖 国外 AI
+  - RULE-SET,domain_google,🍀 Google
+  - RULE-SET,domain_microsoft,🚀 默认代理
+  - RULE-SET,domain_tiktok,🚀 默认代理
+  - RULE-SET,domain_telegram,📲 Telegram
+  - RULE-SET,domain_netflix,🚀 默认代理
+  - RULE-SET,domain_gfw,🚀 默认代理
+  - RULE-SET,domain_geolocation_not_cn,🚀 默认代理
+  - RULE-SET,ip_google,🍀 Google,no-resolve
+  - RULE-SET,ip_netflix,🚀 默认代理,no-resolve
+  - RULE-SET,ip_telegram,📲 Telegram,no-resolve
+  - MATCH,🐟 漏网之鱼
+
+# 规则集
+rule-anchor:
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  class: &class {type: http, interval: 86400, behavior: classical, format: text}
+rule-providers: 
+  domain_private: { <<: *domain, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+  domain_ai_not_cn: {  <<: *domain, url: "https://ghfast.top/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/category-ai-!cn.mrs" }
+  domain_google: { <<: *domain, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
+  domain_microsoft: { <<: *domain, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
+  domain_telegram: { <<: *domain, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
+  domain_netflix: { <<: *domain, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"}
+  domain_apple: { <<: *domain, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-cn.mrs"}
+  domain_tiktok: { <<: *domain, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
+  domain_gfw: { <<: *domain, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
+  domain_cn: { <<: *domain, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+  domain_geolocation_not_cn: { <<: *domain, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/geolocation-!cn.mrs"}
+  ip_cn: { <<: *ip, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
+  ip_google: { <<: *ip, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+  ip_telegram: { <<: *ip, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+  ip_netflix: { <<: *ip, url: "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
