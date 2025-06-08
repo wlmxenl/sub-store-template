@@ -137,7 +137,7 @@
       "tag": "国外AI",
       "type": "selector",
       "outbounds": [
-        "自动选择"
+        "节点选择"
       ]
     },
     {
