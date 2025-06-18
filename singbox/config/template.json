@@ -121,39 +121,39 @@
       "tag": "🚀 默认代理",
       "type": "selector",
       "outbounds": [
-        "自动选择"
+        "♻️ 自动选择"
       ]
     },
     {
-      "tag": "自动选择",
+      "tag": "🤖 国外 AI",
+      "type": "selector",
+      "outbounds": [
+        "🚀 默认代理"
+      ]
+    },
+    {
+      "tag": "🍀 Google",
+      "type": "selector",
+      "outbounds": [
+        "🚀 默认代理"
+      ]
+    },
+    {
+      "tag": "📲 Telegram",
+      "type": "selector",
+      "outbounds": [
+        "🚀 默认代理"
+      ]
+    },
+    {
+      "tag": "♻️ 自动选择",
       "type": "urltest",
       "outbounds": [
       ],
       "url": "http://cp.cloudflare.com/generate_204",
       "interval": "10m",
       "tolerance": 50
-    },
-    {
-      "tag": "国外AI",
-      "type": "selector",
-      "outbounds": [
-        "🚀 默认代理"
-      ]
-    },
-    {
-      "tag": "Google",
-      "type": "selector",
-      "outbounds": [
-        "🚀 默认代理"
-      ]
-    },
-    {
-      "tag": "Telegram",
-      "type": "selector",
-      "outbounds": [
-        "🚀 默认代理"
-      ]
-    },
+    },    
     {
       "type": "direct",
       "tag": "direct"
@@ -212,20 +212,20 @@
         "rule_set": [
           "category-ai-!cn"
         ],
-        "outbound": "国外AI"
+        "outbound": "🤖 国外 AI"
       },
       {
         "rule_set": [
           "geosite-google"
         ],
-        "outbound": "Google"
+        "outbound": "🍀 Google"
       },
       {
         "rule_set": [
           "geoip-telegram",
           "geosite-telegram"
         ],
-        "outbound": "Telegram"
+        "outbound": "📲 Telegram"
       },
       {
         "ip_is_private": true,
