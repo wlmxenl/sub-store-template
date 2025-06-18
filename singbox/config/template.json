@@ -118,7 +118,7 @@
   ],
   "outbounds": [
     {
-      "tag": "节点选择",
+      "tag": "🚀 默认代理",
       "type": "selector",
       "outbounds": [
         "自动选择"
@@ -137,7 +137,21 @@
       "tag": "国外AI",
       "type": "selector",
       "outbounds": [
-        "节点选择"
+        "🚀 默认代理"
+      ]
+    },
+    {
+      "tag": "Google",
+      "type": "selector",
+      "outbounds": [
+        "🚀 默认代理"
+      ]
+    },
+    {
+      "tag": "Telegram",
+      "type": "selector",
+      "outbounds": [
+        "🚀 默认代理"
       ]
     },
     {
@@ -147,7 +161,7 @@
   ],
   "route": {
     "auto_detect_interface": true,
-    "final": "节点选择",
+    "final": "🚀 默认代理",
     "rules": [
       {
         "inbound": [
@@ -175,7 +189,7 @@
       },
       {
         "clash_mode": "global",
-        "outbound": "节点选择"
+        "outbound": "🚀 默认代理"
       },
       {
         "domain": [
@@ -201,10 +215,17 @@
         "outbound": "国外AI"
       },
       {
-        "domain_keyword": [
-          "google"
+        "rule_set": [
+          "geosite-google"
         ],
-        "outbound": "节点选择"
+        "outbound": "Google"
+      },
+      {
+        "rule_set": [
+          "geoip-telegram",
+          "geosite-telegram"
+        ],
+        "outbound": "Telegram"
       },
       {
         "ip_is_private": true,
@@ -222,7 +243,7 @@
       },
       {
         "rule_set": "geosite-geolocation-!cn",
-        "outbound": "节点选择"
+        "outbound": "🚀 默认代理"
       }
     ],
     "rule_set": [
@@ -273,6 +294,27 @@
         "type": "remote",
         "format": "binary",
         "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/category-ai-!cn.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "geosite-google",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/google.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "geosite-telegram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geosite/telegram.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "geoip-telegram",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@sing/geo/geoip/telegram.srs",
         "download_detour": "direct"
       }
     ]
