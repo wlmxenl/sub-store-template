@@ -91,6 +91,7 @@ proxy-groups:
   - {name: 🤖 国外 AI, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
   - {name: 🍀 Google, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
   - {name: 📲 Telegram, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
+  - {name: 📮 NameCrane, type: select, include-all: true}
   - {name: 🐟 漏网之鱼, <<: *pr}  
   #- {name: 🐬 Microsoft, type: select, proxies: [🚀 默认代理], include-all: true}
   #- {name: 🎵 TikTok, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
@@ -114,6 +115,8 @@ rules:
   - RULE-SET,ip_google,🍀 Google,no-resolve
   - RULE-SET,ip_netflix,🚀 默认代理,no-resolve
   - RULE-SET,ip_telegram,📲 Telegram,no-resolve
+  - DOMAIN-SUFFIX,workspace.org,📮 NameCrane
+  - DOMAIN,namecrane.com,📮 NameCrane
   - MATCH,🐟 漏网之鱼
 
 # 规则集
