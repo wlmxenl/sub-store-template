@@ -11,10 +11,6 @@ proxy-providers:
   #     interval: 300
   #   proxy: DIRECT
 
-# 节点信息
-proxies:
-  - {name: 🎯 直连, type: direct}
-
 # https://github.com/MetaCubeX/mihomo/blob/Meta/docs/config.yaml
 # https://wiki.metacubex.one/example/conf/#__tabbed_3_1
 # 全局配置
@@ -81,6 +77,10 @@ dns:
     - 223.5.5.5
     - 119.29.29.29
  
+ # 节点信息
+proxies:
+  - {name: 🎯 直连, type: direct}
+
 # 出站策略
 # 注意锚点必须放在引用的上方，可以集中把锚点全部放yaml的顶部。
 pr: &pr {type: select, proxies: [🔰 节点选择, 🎯 直连]}
