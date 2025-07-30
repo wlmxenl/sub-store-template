@@ -83,10 +83,10 @@ dns:
  
 # 出站策略
 # 注意锚点必须放在引用的上方，可以集中把锚点全部放yaml的顶部。
-pr: &pr {type: select, proxies: [🚀 默认代理, 🎯 直连]}
+pr: &pr {type: select, proxies: [🔰 节点选择, 🎯 直连]}
 proxy-groups:
-  - {name: 🚀 默认代理, type: select, include-all: true, filter: "^((?!直连).)*$"}
-  - {name: 🤖 国外 AI, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}  
+  - {name: 🔰 节点选择, type: select, include-all: true, filter: "^((?!直连).)*$"}
+  - {name: 🤖 国外 AI, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}  
   - {name: 🐟 漏网之鱼, <<: *pr}
 
 # 规则匹配
@@ -97,16 +97,16 @@ rules:
   - RULE-SET,ip_cn,DIRECT
   - RULE-SET,domain_apple,DIRECT
   - RULE-SET,domain_ai_not_cn,🤖 国外 AI
-  - RULE-SET,domain_google,🚀 默认代理
-  - RULE-SET,domain_microsoft,🚀 默认代理
-  - RULE-SET,domain_tiktok,🚀 默认代理
-  - RULE-SET,domain_telegram,🚀 默认代理
-  - RULE-SET,domain_netflix,🚀 默认代理
-  - RULE-SET,domain_gfw,🚀 默认代理
-  - RULE-SET,domain_geolocation_not_cn,🚀 默认代理
-  - RULE-SET,ip_google,🚀 默认代理,no-resolve
-  - RULE-SET,ip_netflix,🚀 默认代理,no-resolve
-  - RULE-SET,ip_telegram,🚀 默认代理,no-resolve
+  - RULE-SET,domain_google,🔰 节点选择
+  - RULE-SET,domain_microsoft,🔰 节点选择
+  - RULE-SET,domain_tiktok,🔰 节点选择
+  - RULE-SET,domain_telegram,🔰 节点选择
+  - RULE-SET,domain_netflix,🔰 节点选择
+  - RULE-SET,domain_gfw,🔰 节点选择
+  - RULE-SET,domain_geolocation_not_cn,🔰 节点选择
+  - RULE-SET,ip_google,🔰 节点选择,no-resolve
+  - RULE-SET,ip_netflix,🔰 节点选择,no-resolve
+  - RULE-SET,ip_telegram,🔰 节点选择,no-resolve
   - MATCH,🐟 漏网之鱼
 
 # 规则集

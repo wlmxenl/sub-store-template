@@ -84,17 +84,17 @@ dns:
  
 # 出站策略
 # 注意锚点必须放在引用的上方，可以集中把锚点全部放yaml的顶部。
-pr: &pr {type: select, proxies: [🚀 默认代理, 🎯 直连]}
+pr: &pr {type: select, proxies: [🔰 节点选择, 🎯 直连]}
 proxy-groups:
-  - {name: 🚀 默认代理, type: select, proxies: [♻️ 自动选择], include-all: true, filter: "^((?!直连).)*$"}
+  - {name: 🔰 节点选择, type: select, proxies: [♻️ 自动选择], include-all: true, filter: "^((?!直连).)*$"}
   - {name: ♻️ 自动选择, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^((?!直连).)*$"}
-  - {name: 🤖 国外 AI, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
-  - {name: 🍀 Google, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
-  - {name: 📲 Telegram, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
+  - {name: 🤖 国外 AI, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
+  - {name: 🍀 Google, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
+  - {name: 📲 Telegram, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
   - {name: 🐟 漏网之鱼, <<: *pr}  
-  #- {name: 🐬 Microsoft, type: select, proxies: [🚀 默认代理], include-all: true}
-  #- {name: 🎵 TikTok, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
-  #- {name: 📺 Netflix, type: select, proxies: [🚀 默认代理], include-all: true, filter: "^((?!直连).)*$"}
+  #- {name: 🐬 Microsoft, type: select, proxies: [🔰 节点选择], include-all: true}
+  #- {name: 🎵 TikTok, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
+  #- {name: 📺 Netflix, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
 
 # 规则匹配
 # 此规则部分没有做防泄露处理，因为弊严重大于利！
@@ -105,14 +105,14 @@ rules:
   - RULE-SET,domain_apple,DIRECT
   - RULE-SET,domain_ai_not_cn,🤖 国外 AI
   - RULE-SET,domain_google,🍀 Google
-  - RULE-SET,domain_microsoft,🚀 默认代理
-  - RULE-SET,domain_tiktok,🚀 默认代理
+  - RULE-SET,domain_microsoft,🔰 节点选择
+  - RULE-SET,domain_tiktok,🔰 节点选择
   - RULE-SET,domain_telegram,📲 Telegram
-  - RULE-SET,domain_netflix,🚀 默认代理
-  - RULE-SET,domain_gfw,🚀 默认代理
-  - RULE-SET,domain_geolocation_not_cn,🚀 默认代理
+  - RULE-SET,domain_netflix,🔰 节点选择
+  - RULE-SET,domain_gfw,🔰 节点选择
+  - RULE-SET,domain_geolocation_not_cn,🔰 节点选择
   - RULE-SET,ip_google,🍀 Google,no-resolve
-  - RULE-SET,ip_netflix,🚀 默认代理,no-resolve
+  - RULE-SET,ip_netflix,🔰 节点选择,no-resolve
   - RULE-SET,ip_telegram,📲 Telegram,no-resolve
   - MATCH,🐟 漏网之鱼
 
