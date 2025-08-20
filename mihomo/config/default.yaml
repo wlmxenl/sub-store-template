@@ -74,7 +74,8 @@ dns:
   default-nameserver:
     - 223.5.5.5
   proxy-server-nameserver:
-    - https://dns.google/dns-query
+    - 8.8.8.8
+    - 8.8.4.4
   # namesever尽量用运营商提供的DNS
   nameserver:
     - 223.5.5.5
