@@ -106,6 +106,11 @@
         "outbound": "🤖 国外 AI"
       },
       {
+        "rule_set": "youtube_domain",
+        "action": "route",
+        "outbound": "📹 YouTube"
+      },
+      {
         "rule_set": [
           "telegram_ip",
           "telegram_domain"
@@ -124,7 +129,8 @@
             "invert": true,
             "rule_set": [
               "cn_domain",
-              "apple_domain"
+              "apple_domain",
+              "google_domain"
             ]
           }
         ],
@@ -200,6 +206,20 @@
         "type": "remote",
         "format": "binary",
         "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/telegram.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "youtube_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/youtube.srs",
+        "download_detour": "direct"
+      },
+      {
+        "tag": "google_domain",
+        "type": "remote",
+        "format": "binary",
+        "url": "https://ghfast.top/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/sing/geo-lite/geosite/google.srs",
         "download_detour": "direct"
       }
     ],
