@@ -244,11 +244,20 @@
       "default": "🚀 默认代理"
     },
     {
+      "tag": "📹 YouTube",
+      "type": "selector",
+      "outbounds": [
+        "🚀 默认代理"
+      ],
+      "default": "🚀 默认代理"
+    },
+    {
       "tag": "📲 Telegram",
       "type": "selector",
       "outbounds": [
         "🚀 默认代理"
-      ]
+      ],
+      "default": "🚀 默认代理"
     },    
     {
       "tag": "♻️ 自动选择",
