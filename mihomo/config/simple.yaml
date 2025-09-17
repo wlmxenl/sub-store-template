@@ -85,8 +85,9 @@ proxies:
 # 注意锚点必须放在引用的上方，可以集中把锚点全部放yaml的顶部。
 pr: &pr {type: select, proxies: [🔰 节点选择, 🎯 直连]}
 proxy-groups:
-  - {name: 🔰 节点选择, type: select, include-all: true, filter: "^((?!直连).)*$"}
-  - {name: 🤖 国外 AI, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}  
+  - {name: 🔰 节点选择, type: select, proxies: [♻️ 自动选择], include-all: true, filter: "^((?!直连).)*$"}
+  - {name: ♻️ 自动选择, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^((?!直连|flapjacks).)*$"}  
+  - {name: 🤖 国外 AI, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连|flapjacks).)*$"}  
   - {name: 🐟 漏网之鱼, <<: *pr}
 
 # 规则匹配
