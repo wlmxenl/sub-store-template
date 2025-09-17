@@ -90,8 +90,8 @@ proxies:
 pr: &pr {type: select, proxies: [🔰 节点选择, 🎯 直连]}
 proxy-groups:
   - {name: 🔰 节点选择, type: select, proxies: [♻️ 自动选择], include-all: true, filter: "^((?!直连).)*$"}
-  - {name: ♻️ 自动选择, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^((?!直连).)*$"}
-  - {name: 🤖 国外 AI, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
+  - {name: ♻️ 自动选择, type: url-test, include-all: true, tolerance: 20, interval: 300, filter: "^((?!直连|flapjacks).)*$"}
+  - {name: 🤖 国外 AI, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连|flapjacks).)*$"}
   - {name: 📹 YouTube, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
   - {name: 📲 Telegram, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
   - {name: 🐟 漏网之鱼, <<: *pr}  
