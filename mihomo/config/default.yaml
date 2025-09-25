@@ -90,11 +90,12 @@ proxies:
 pr: &pr {type: select, proxies: [🔰 节点选择, 🎯 直连]}
 proxy-groups:
   - {name: 🔰 节点选择, type: select, proxies: [♻️ 自动选择], include-all: true, filter: "^(?!.*(直连)).*$"}
-  - {name: ♻️ 自动选择, type: url-test, include-all: true, tolerance: 20, interval: 60, filter: "^(?!.*(直连|rfc)).*$"}
+  - {name: ♻️ 自动选择, type: fallback, proxies: [📊 测速], interval: 60}
   - {name: 🤖 国外 AI, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^(?!.*(直连|hk)).*$"}
   - {name: 📹 YouTube, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
   - {name: 📲 Telegram, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
-  - {name: 🐟 漏网之鱼, <<: *pr}  
+  - {name: 🐟 漏网之鱼, <<: *pr}
+  - {name: 📊 测速, type: url-test, include-all: true, interval: 60, tolerance: 0, filter: "^(?!.*(直连|rfc)).*$"}
   #- {name: 🐬 Microsoft, type: select, proxies: [🔰 节点选择], include-all: true}
   #- {name: 🎵 TikTok, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
   #- {name: 📺 Netflix, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
