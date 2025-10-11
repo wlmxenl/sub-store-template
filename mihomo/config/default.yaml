@@ -94,7 +94,7 @@ proxy-groups:
   - {name: 🤖 国外 AI, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^(?!.*(直连|hk)).*$"}
   - {name: 📹 YouTube, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
   - {name: 📲 Telegram, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
-  - {name: 🐟 漏网之鱼, <<: *pr}
+  - {name: 🐟 漏网之鱼, type: select, proxies: [🔰 节点选择, 🎯 直连], include-all: true, filter: "^((?!直连).)*$"}
   #- {name: 🐬 Microsoft, type: select, proxies: [🔰 节点选择], include-all: true}
   #- {name: 🎵 TikTok, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
   #- {name: 📺 Netflix, type: select, proxies: [🔰 节点选择], include-all: true, filter: "^((?!直连).)*$"}
